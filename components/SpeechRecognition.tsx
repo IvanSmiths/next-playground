@@ -18,12 +18,16 @@ const SpeechRecognitionComponent = () => {
             }
             console.log('transcript', transcript)
             setText(transcript);
+            const utterance = new SpeechSynthesisUtterance('Hello, world!');
+            window.speechSynthesis.speak(utterance);
         }
         recognition.end = function (event) {
             console.error('Error in speech recognition: ', event);
         };
         recognition.onerror = function (event) {
             console.error('Error in speech recognition: ', event);
+            const utterance = new SpeechSynthesisUtterance('Error!');
+            window.speechSynthesis.speak(utterance);
         };
     }
 
