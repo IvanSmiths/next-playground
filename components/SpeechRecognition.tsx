@@ -47,7 +47,6 @@ const SpeechRecognitionComponent = () => {
             {text}
             <h1 className={`${text === "test" ? "animate-pulse" : ""}`}>Hi</h1>
         </>
-
     );
 };
 
