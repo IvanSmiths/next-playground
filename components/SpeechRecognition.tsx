@@ -5,14 +5,17 @@ import {useState} from "react";
 const SpeechRecognitionComponent = () => {
     const [text, setText] = useState<string>();
 
-    function handleOnRecord() {
-        // @ts-ignore
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        const recognition = new SpeechRecognition();
+    function handleOnRecord(): void {
+        const SpeechRecognition: {
+            new(): SpeechRecognition,
+            process?: any
+        } = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition: SpeechRecognition = new SpeechRecognition();
 
-        recognition.start(console.log('start'));
-        recognition.onresult = async function (event) {
-            const transcript = event.results[0][0].transcript;
+        recognition.start();
+
+        recognition.onresult = async function (event: SpeechRecognitionEvent): Promise<void> {
+            const transcript: string = event.results[0][0].transcript;
             if (!transcript) {
                 console.error("No transcript was found.");
             }
@@ -21,14 +24,21 @@ const SpeechRecognitionComponent = () => {
             const utterance = new SpeechSynthesisUtterance('Hello, world!');
             window.speechSynthesis.speak(utterance);
         }
-        recognition.end = function (event) {
+
+        recognition.onend = function (event: Event): void {
             console.error('Error in speech recognition: ', event);
         };
-        recognition.onerror = function (event) {
+
+        recognition.onerror = function (event: SpeechRecognitionErrorEvent): void {
             console.error('Error in speech recognition: ', event);
             const utterance = new SpeechSynthesisUtterance('Error!');
             window.speechSynthesis.speak(utterance);
         };
+
+        setTimeout((): void => {
+            recognition.stop();
+            console.log('stop');
+        }, 5000);
     }
 
     return (
