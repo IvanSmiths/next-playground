@@ -21,7 +21,7 @@ const SpeechRecognitionComponent = () => {
             }
             console.log('transcript', transcript)
             setText(transcript);
-            const utterance = new SpeechSynthesisUtterance('Hello, world!');
+            const utterance: SpeechSynthesisUtterance = new SpeechSynthesisUtterance(transcript);
             window.speechSynthesis.speak(utterance);
         }
 
@@ -30,8 +30,8 @@ const SpeechRecognitionComponent = () => {
         };
 
         recognition.onerror = function (event: SpeechRecognitionErrorEvent): void {
-            console.error('Error in speech recognition: ', event);
-            const utterance = new SpeechSynthesisUtterance('Error!');
+            console.error('Error in speech recognition: ', event.error);
+            const utterance: SpeechSynthesisUtterance = new SpeechSynthesisUtterance('Error!');
             window.speechSynthesis.speak(utterance);
         };
 
@@ -45,6 +45,7 @@ const SpeechRecognitionComponent = () => {
         <>
             <button onClick={handleOnRecord}>Record</button>
             {text}
+            <h1 className={`${text === "test" ? "animate-pulse" : ""}`}>Hi</h1>
         </>
 
     );
