@@ -45,7 +45,7 @@ const SpeechRecognitionComponent = () => {
         <>
             <button onClick={handleOnRecord}>Record</button>
             {text}
-            <h1 className={`${text === "test" ? "animate-pulse" : ""}`}>Hi</h1>
+            <h1 className={`${text?.includes("test") ? "animate-pulse" : ""}`}>Hi</h1>
         </>
     );
 };
